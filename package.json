@@ -1,0 +1,26 @@
+{
+  "name": "js13k-base",
+  "version": "0.0.1",
+  "description": "Boilerplate template for making very small games",
+  "main": "index.js",
+  "scripts": {
+    "test": "lol nope"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aerze/js13k-base.git"
+  },
+  "keywords": [
+    "js13k",
+    "boilerplate",
+    "game",
+    "js",
+    "13k"
+  ],
+  "author": "Gus Suarez <gus@mythril.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aerze/js13k-base/issues"
+  },
+  "homepage": "https://github.com/aerze/js13k-base#readme"
+}
