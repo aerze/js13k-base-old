@@ -58,5 +58,5 @@ typings/
 .env
 
 # build artifacts
-bulid/
+build/
 dist/

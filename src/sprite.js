@@ -1,6 +1,6 @@
 const main = {
   test: () => {
-    return 'this is a thing';
+    return 'this is a thing1';
   },
 
   other: 34,
