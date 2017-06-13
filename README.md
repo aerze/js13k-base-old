@@ -7,8 +7,6 @@ Boilerplate template for making very small games
 - `npm start`
   - kick off a simple server and the webpack watcher
 
-- `npm run build`
-  - build closure compiled version
+- `npm run package`
+  - kick off a simple server and build closure compiled version
 
-- Todo: `npm run package`
-  - build full zip with assets

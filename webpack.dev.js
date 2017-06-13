@@ -1,7 +1,6 @@
-const path = require('path');
-const ClosureCompilerPlugin = require('webpack-closure-compiler');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const path = require('path')
+// const ClosureCompilerPlugin = require('webpack-closure-compiler')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -14,8 +13,9 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'js13k-base'
-    }),
+      title: 'js13k-base',
+      template: './src/index.ejs'
+    })
 
     // new ClosureCompilerPlugin({
     //   compiler: {
@@ -26,4 +26,4 @@ module.exports = {
     //   concurrency: 3,
     // })
   ]
-};
+}

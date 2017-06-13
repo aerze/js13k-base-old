@@ -1,6 +1,6 @@
-const path = require('path');
-const ClosureCompilerPlugin = require('webpack-closure-compiler');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const ClosureCompilerPlugin = require('webpack-closure-compiler')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -12,7 +12,8 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'js13k-base'
+      title: 'js13k-base',
+      template: './src/index.ejs'
     }),
 
     new ClosureCompilerPlugin({
@@ -21,7 +22,7 @@ module.exports = {
         language_out: 'ECMASCRIPT5',
         compilation_level: 'ADVANCED'
       },
-      concurrency: 3,
+      concurrency: 3
     })
   ]
-};
+}
