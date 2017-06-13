@@ -1,6 +1,7 @@
 const path = require('path')
 const ClosureCompilerPlugin = require('webpack-closure-compiler')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+var CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
   entry: './src/index.js',
@@ -23,6 +24,12 @@ module.exports = {
         compilation_level: 'ADVANCED'
       },
       concurrency: 3
+    }),
+
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|html)$/
     })
   ]
 }
