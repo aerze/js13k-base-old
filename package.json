@@ -4,7 +4,10 @@
   "description": "Boilerplate template for making very small games",
   "main": "index.js",
   "scripts": {
-    "test": "lol nope"
+    "start": "static ./build & npm run dev",
+    "dev": "webpack -w --env=dev --progress --profile --colors",
+    "build": "webpack --env=prod --progress --profile --colors",
+    "package": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/aerze/js13k-base/issues"
   },
-  "homepage": "https://github.com/aerze/js13k-base#readme"
+  "homepage": "https://github.com/aerze/js13k-base#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.28.0",
+    "node-static": "^0.7.9",
+    "webpack": "^2.6.1",
+    "webpack-closure-compiler": "^2.1.4"
+  }
 }
