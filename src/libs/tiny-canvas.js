@@ -38,8 +38,8 @@ function CompileShader (gl, source, type) {
 /**
  * Creates a program using 2 shaders
  * @param {WebGLRenderingContext} gl
- * @param {string} vsSource
- * @param {string} fsSource
+ * @param {string} vsSource - vertex shader
+ * @param {string} fsSource - fragment shader
  */
 function CreateShaderProgram (gl, vsSource, fsSource) {
   const program = gl.createProgram()
@@ -66,7 +66,7 @@ function CreateBuffer (gl, bufferType, size, usage) {
 }
 
 /**
- *
+ * Creates a texture render-able by TinyCanvas.img()
  * @param {WebGLRenderingContext} gl
  * @param {ImageBitmap | ImageData | HTMLVideoElement | HTMLImageElement | HTMLCanvasElement} image
  * @param {number} width
@@ -95,7 +95,7 @@ function TinyCanvas (canvas) {
   const gl = canvas.getContext('webgl')
   const VERTEX_SIZE = (4 * 2) + (4 * 2) + (4)
   const MAX_BATCH = 10922 // floor((2 ^ 16) / 6)
-  const MAX_STACK = 100
+  // const MAX_STACK = 100
   // const MAT_SIZE = 6
   const VERTICES_PER_QUAD = 6
   // const MAT_STACK_SIZE = MAX_STACK * MAT_SIZE
@@ -233,8 +233,8 @@ function TinyCanvas (canvas) {
      * @param {number} y
      */
     trans (x, y) {
-      mat[4] = mat[0] * x + mat[2] * y + mat[4];
-      mat[5] = mat[1] * x + mat[3] * y + mat[5];
+      mat[4] = mat[0] * x + mat[2] * y + mat[4]
+      mat[5] = mat[1] * x + mat[3] * y + mat[5]
     },
 
     /**
@@ -243,10 +243,10 @@ function TinyCanvas (canvas) {
      * @param {number} y
      */
     scale (x, y) {
-      mat[0] = mat[0] * x;
-      mat[1] = mat[1] * x;
-      mat[2] = mat[2] * y;
-      mat[3] = mat[3] * y;
+      mat[0] = mat[0] * x
+      mat[1] = mat[1] * x
+      mat[2] = mat[2] * y
+      mat[3] = mat[3] * y
     },
 
     /**
