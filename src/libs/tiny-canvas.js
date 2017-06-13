@@ -86,19 +86,24 @@ function CreateTexture (gl, image, width, height) {
   return texture
 }
 
+/**
+ * TinyCanvas Constructor
+ * @param {HTMLCanvasElement} canvas
+ */
 function TinyCanvas (canvas) {
+  /** @type {WebGLRenderingContext} */
   const gl = canvas.getContext('webgl')
   const VERTEX_SIZE = (4 * 2) + (4 * 2) + (4)
   const MAX_BATCH = 10922 // floor((2 ^ 16) / 6)
   const MAX_STACK = 100
-  const MAT_SIZE = 6
+  // const MAT_SIZE = 6
   const VERTICES_PER_QUAD = 6
-  const MAT_STACK_SIZE = MAX_STACK * MAT_SIZE
+  // const MAT_STACK_SIZE = MAX_STACK * MAT_SIZE
   const VERTEX_DATA_SIZE = VERTEX_SIZE * MAX_BATCH * 4
   const INDEX_DATA_SIZE = MAX_BATCH * (2 * VERTICES_PER_QUAD)
   const width = canvas.width
   const height = canvas.height
-  const shader = CreateShaderProgram( gl, [
+  const shader = CreateShaderProgram(gl, [
     'precision lowp float;',
     // IN Vertex Position and
     // IN Texture Coordinates
@@ -129,6 +134,7 @@ function TinyCanvas (canvas) {
     'gl_FragColor=texture2D(f,d)*e;',
     '}'
   ].join('\n'))
+
   const glBufferSubData = gl.bufferSubData.bind(gl)
   const glDrawElements = gl.drawElements.bind(gl)
   const glBindTexture = gl.bindTexture.bind(gl)
@@ -147,7 +153,6 @@ function TinyCanvas (canvas) {
   const cos = Math.cos
   const sin = Math.sin
   let currentTexture = null
-  let renderer = null
   let locA
   let locB
   let locC
@@ -186,26 +191,68 @@ function TinyCanvas (canvas) {
     ])
   )
   gl.activeTexture(33984)
-  renderer = {
+  const renderer = {
+    /**
+     * Reference to the WebGL Context used by the renderer
+     * @type {WebGLRenderingContext}
+     */
     g: gl,
+
+    /**
+     * Reference to the HTML Canvas Element used by the renderer
+     * @type {HTMLCanvasElement}
+     */
     c: canvas,
+
+    /**
+     * Integer number representing the current tint color on the canvas. It's represented like ARGB (ex: 0xFF FF FF FF)
+     * @type {number}
+     */
     col: 0xFFFFFFFF,
+
+    /**
+     *  Sets the background color. Maps to glClearColor. It requires normalized to 1.0 values
+     * @param {number} r - red
+     * @param {number} g - green
+     * @param {number} b - blue
+     */
     bkg (r, g, b) {
       glClearColor(r, g, b, 1)
     },
+
+    /**
+     * Clear the current frame buffer
+     */
     cls () {
       glClear(16384)
     },
+
+    /**
+     * Applies translate transformation to current matrix
+     * @param {number} x
+     * @param {number} y
+     */
     trans (x, y) {
       mat[4] = mat[0] * x + mat[2] * y + mat[4];
       mat[5] = mat[1] * x + mat[3] * y + mat[5];
     },
+
+    /**
+     * Applies scale transformation to current matrix
+     * @param {number} x
+     * @param {number} y
+     */
     scale (x, y) {
       mat[0] = mat[0] * x;
       mat[1] = mat[1] * x;
       mat[2] = mat[2] * y;
       mat[3] = mat[3] * y;
     },
+
+    /**
+     * Applies rotation transformation to current matrix
+     * @param {number} r - radians
+     */
     rot (r) {
       const a = mat[0]
       const b = mat[1]
@@ -219,6 +266,10 @@ function TinyCanvas (canvas) {
       mat[2] = a * -sr + c * cr
       mat[3] = b * -sr + d * cr
     },
+
+    /**
+     * Pushes the current matrix into the matrix stack
+     */
     push () {
       stack[stackp + 0] = mat[0]
       stack[stackp + 1] = mat[1]
@@ -228,6 +279,10 @@ function TinyCanvas (canvas) {
       stack[stackp + 5] = mat[5]
       stackp += 6
     },
+
+    /**
+     * Pops the matrix stack into the current matrix
+     */
     pop () {
       stackp -= 6
       mat[0] = stack[stackp + 0]
@@ -237,6 +292,20 @@ function TinyCanvas (canvas) {
       mat[4] = stack[stackp + 4]
       mat[5] = stack[stackp + 5]
     },
+
+    /**
+     * Batches texture rendering properties.
+     * NOTE: If you are not drawing a tile of a texture then you can set u0 = 0, v0 = 0, u1 = 1 and v1 = 1
+     * @param {WebGLTexture} texture
+     * @param {number} x
+     * @param {number} y
+     * @param {number} w - width
+     * @param {number} h - height
+     * @param {number} u0
+     * @param {number} v0
+     * @param {number} u1
+     * @param {number} v1
+     */
     img (texture, x, y, w, h, u0, v0, u1, v1) {
       const x0 = x
       const y0 = y
@@ -303,6 +372,10 @@ function TinyCanvas (canvas) {
         count = 0
       }
     },
+
+    /**
+     * Pushes the current batch information to the GPU for rendering
+     */
     flush () {
       if (count === 0) return
       glBufferSubData(34962, 0, vPositionData.subarray(0, count * VERTEX_SIZE))
