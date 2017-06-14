@@ -1,4 +1,8 @@
 import TinyCanvas, { CreateTexture } from './libs/tiny-canvas'
+import playSong from './music'
+
+playSong()
+
 // This example is based of PIXI's bunnymark
 
 const canvas = TinyCanvas(document.getElementById('canvas'))
