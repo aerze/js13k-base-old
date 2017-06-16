@@ -1,4 +1,4 @@
-import Sequence from './libs/tiny-music'
+import Sequence from '../libs/tiny-music'
 
 export default function playSong () {
   // create the audio context

@@ -1,7 +1,10 @@
-import TinyCanvas, { CreateTexture } from './libs/tiny-canvas'
+import TinyCanvas, { CreateTexture } from '../libs/tiny-canvas'
+import TinyPad, { BUTTONS } from '../libs/tiny-pad'
 import playSong from './music'
 
-playSong()
+const _ = Object.assign({}, BUTTONS)
+const inputManager = new TinyPad()
+// playSong()
 
 // This example is based of PIXI's bunnymark
 
@@ -15,7 +18,7 @@ const minX = 0
 const maxY = canvas.c.height
 const minY = 0
 const startBunnyCount = 2
-const amount = 100
+const amount = 1
 const kittens = []
 const counter = document.getElementById('kitten-count')
 const frames = [
@@ -123,8 +126,17 @@ function draw () {
   canvas.flush()
 }
 
+function pads () {
+  const p1 = inputManager[0]
+
+  if (p1.justPressed(_.UP)) add = true
+  if (p1.justReleased(_.UP)) add = false
+}
+
 function mainLoop () {
   requestAnimationFrame(mainLoop)
+  inputManager.update()
+  pads()
   update()
   draw()
 }
