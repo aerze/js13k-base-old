@@ -44,25 +44,18 @@ class SimplePad {
   }
 }
 
-class TinyPad {
-  constructor () {
-    this[0] = new SimplePad()
-    // this[1] = new SimplePad()
-    // this[2] = new SimplePad()
-    // this[3] = new SimplePad()
-  }
+const TinyPad = [
+  new SimplePad(),
+  new SimplePad(),
+  new SimplePad(),
+  new SimplePad()
+]
 
-  /**
-   * Updates the SimplePads
-   * Should be called every game loop update
-   */
-  update () {
-    const gps = navigator.getGamepads()
-    this[0].update(gps[0])
-    // this[1].update(gps[1])
-    // this[2].update(gps[2])
-    // this[3].update(gps[3])
-  }
+TinyPad.update = function () {
+  const gps = navigator.getGamepads()
+  this.forEach(function (pad, i) {
+    pad.update(gps[i])
+  })
 }
 
 export { BUTTONS }

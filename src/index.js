@@ -3,7 +3,7 @@ import TinyPad, { BUTTONS } from '../libs/tiny-pad'
 import playSong from './music'
 
 const _ = Object.assign({}, BUTTONS)
-const inputManager = new TinyPad()
+// const TinyPad = new TinyPad()
 // playSong()
 
 // This example is based of PIXI's bunnymark
@@ -127,7 +127,7 @@ function draw () {
 }
 
 function pads () {
-  const p1 = inputManager[0]
+  const p1 = TinyPad[0]
 
   if (p1.justPressed(_.UP)) add = true
   if (p1.justReleased(_.UP)) add = false
@@ -135,7 +135,7 @@ function pads () {
 
 function mainLoop () {
   requestAnimationFrame(mainLoop)
-  inputManager.update()
+  TinyPad.update()
   pads()
   update()
   draw()
