@@ -4,9 +4,16 @@ Boilerplate template for making very small games
 
 ### Usage
 
+Run `npm install`
+
 - `npm start`
-  - kick off a simple server and the webpack watcher
+  - serves `./build` and starts webpack with watcher
 
 - `npm run package`
-  - kick off a simple server and build closure compiled version
+  - serves `/dist` with gzip and runs webpack with closure compiler
+
+##### To Do:
+
+- `npm run release`
+  - bundle, zip/compress dist directory
 

@@ -4,7 +4,6 @@
   "description": "Boilerplate template for making very small games",
   "main": "index.js",
   "scripts": {
-    "h": "webpack -h",
     "start": "npm run build:dev & npm run serve:dev",
     "serve:dev": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./build",
     "build:dev": "webpack -w --env=dev --progress --profile --colors",
