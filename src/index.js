@@ -1,10 +1,7 @@
 import TinyCanvas, { CreateTexture } from '../libs/tiny-canvas'
-import TinyPad, { BUTTONS } from '../libs/tiny-pad'
 import playSong from './music'
 
-const _ = Object.assign({}, BUTTONS)
-// const TinyPad = new TinyPad()
-// playSong()
+playSong()
 
 // This example is based of PIXI's bunnymark
 
@@ -126,17 +123,8 @@ function draw () {
   canvas.flush()
 }
 
-function pads () {
-  const p1 = TinyPad[0]
-
-  if (p1.justPressed(_.UP)) add = true
-  if (p1.justReleased(_.UP)) add = false
-}
-
 function mainLoop () {
   requestAnimationFrame(mainLoop)
-  TinyPad.update()
-  pads()
   update()
   draw()
 }
