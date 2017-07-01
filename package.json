@@ -7,14 +7,13 @@
     "start": "npm run build:dev & npm run serve:dev",
     "serve:dev": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./build",
     "build:dev": "webpack -w --env=dev --progress --profile --colors",
-
-    "package": "npm run build:prod & npm run serve:prod",
+    "package": "gulp package",
     "serve:prod": "static -z -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./dist",
     "build:prod": "webpack --env=prod --progress --profile --colors",
-
     "tiny-music-maker": "npm run build:tiny-music-maker & npm run serve:tiny-music-maker",
     "serve:tiny-music-maker": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./tools/tiny-music-maker/dist",
-    "build:tiny-music-maker": "webpack -w --env=dev --progress --profile --colors --config=./tools/tiny-music-maker/webpack.config.js"
+    "build:tiny-music-maker": "webpack -w --env=dev --progress --profile --colors --config=./tools/tiny-music-maker/webpack.config.js",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
@@ -41,9 +40,13 @@
     "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "gulp-zip": "^4.0.0",
     "html-webpack-plugin": "^2.28.0",
     "node-static": "^0.7.9",
     "webpack": "^2.6.1",
     "webpack-closure-compiler": "^2.1.4"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
   }
 }

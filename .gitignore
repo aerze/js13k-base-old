@@ -60,6 +60,7 @@ typings/
 # Build artifacts
 build/
 dist/
+release/
 
 # VSCode
 .vscode/
