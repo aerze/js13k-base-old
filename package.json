@@ -7,12 +7,9 @@
     "start": "npm run build:dev & npm run serve:dev",
     "serve:dev": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./build",
     "build:dev": "webpack -w --env=dev --progress --profile --colors",
-    "package": "gulp package",
     "serve:prod": "static -z -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./dist",
     "build:prod": "webpack --env=prod --progress --profile --colors",
-    "tiny-music-maker": "npm run build:tiny-music-maker & npm run serve:tiny-music-maker",
-    "serve:tiny-music-maker": "static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./tools/tiny-music-maker/dist",
-    "build:tiny-music-maker": "webpack -w --env=dev --progress --profile --colors --config=./tools/tiny-music-maker/webpack.config.js",
+    "package": "npm run build:prod && gulp package",
     "gulp": "gulp"
   },
   "repository": {
