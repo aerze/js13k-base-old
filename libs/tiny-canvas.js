@@ -88,6 +88,8 @@ function CreateTexture (gl, image, width, height) {
 
 /**
  * TinyCanvas Constructor
+ * @class
+ * @constructor
  * @param {HTMLCanvasElement} canvas
  */
 function TinyCanvas (canvas) {
@@ -103,37 +105,26 @@ function TinyCanvas (canvas) {
   const INDEX_DATA_SIZE = MAX_BATCH * (2 * VERTICES_PER_QUAD)
   const width = canvas.width
   const height = canvas.height
-  const shader = CreateShaderProgram(gl, [
-    'precision lowp float;',
-    // IN Vertex Position and
-    // IN Texture Coordinates
-    'attribute vec2 a, b;',
-    // IN Vertex Color
-    'attribute vec4 c;',
-    // OUT Texture Coordinates
-    'varying vec2 d;',
-    // OUT Vertex Color
-    'varying vec4 e;',
-    // CONST View Matrix
-    'uniform mat4 m;',
-    'uniform vec2 r;',
-    'void main(){',
-    'gl_Position=m*vec4(a,1.0,1.0);',
-    'd=b;',
-    'e=c;',
-    '}'
-  ].join('\n'), [
-    'precision lowp float;',
-    // OUT Texture Coordinates
-    'varying vec2 d;',
-    // OUT Vertex Color
-    'varying vec4 e;',
-    // CONST Single Sampler2D
-    'uniform sampler2D f;',
-    'void main(){',
-    'gl_FragColor=texture2D(f,d)*e;',
-    '}'
-  ].join('\n'))
+  const shader = CreateShaderProgram(gl, `
+    precision lowp float;
+    attribute vec2 a, b;
+    attribute vec4 c;
+    varying vec2 d;
+    varying vec4 e;
+    uniform mat4 m;
+    uniform vec2 r;
+    void main(){
+      gl_Position=m*vec4(a,1.0,1.0);
+      d=b;
+      e=c;
+    }`, `
+    precision lowp float;
+    varying vec2 d;
+    varying vec4 e;
+    uniform sampler2D f;
+    void main(){
+      gl_FragColor=texture2D(f,d)*e;
+    }`)
 
   const glBufferSubData = gl.bufferSubData.bind(gl)
   const glDrawElements = gl.drawElements.bind(gl)
