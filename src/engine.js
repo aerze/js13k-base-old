@@ -19,9 +19,10 @@ export default class Engine {
   }
 
   loop () {
+    // console.log('loop')
     requestAnimationFrame(this.loop)
     this.update()
-    this.canvas.clear()
+    this.canvas.cls()
     this.draw()
     this.canvas.flush()
     this.frameCount++
@@ -41,9 +42,11 @@ export default class Engine {
   }
 
   draw () {
+    // console.log(this.layers)
     for (let i = 0; i < this.layers.length; i++) {
       for (let j = 0; j < this.layers[i].length; j++) {
-        this.layers[i][j].draw(this.canvas, this.texture)
+        console.log(this.layers[i][j])
+        this.layers[i][j].draw(this.frameCount, this.canvas, this.texture)
       }
     }
   }

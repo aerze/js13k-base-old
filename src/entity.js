@@ -1,4 +1,5 @@
-import TinyCanvas, { CreateTexture } from './canvas'
+// import TinyCanvas, { CreateTexture } from './canvas'
+import TinyCanvas, { CreateTexture } from '../libs/tiny-canvas'
 import Sprite from './sprite'
 
 export default class Entity {
@@ -12,7 +13,7 @@ export default class Entity {
    * @param {function|null} updateFunction
    * @param {number} type
    */
-  constructor (layer, x = 0, y = 0, hitbox, spriteStack, update = null, type) {
+  constructor (layer, x = 0, y = 0, hitbox, spriteStack, update = () => {}, type) {
     this.layer = layer
     this.x = x
     this.y = y
@@ -21,7 +22,8 @@ export default class Entity {
     this.yv = 0
     this.hitbox = hitbox
     this.spriteStack = spriteStack
-    this.update = update
+    this.update = update.bind(this)
+    this.type = type
   }
 
   delete () {
@@ -34,10 +36,11 @@ export default class Entity {
 
   /**
    * Draw entity to a canvas
+   * @param {number} frameCount
    * @param {} canvas
    * @param {WebGLTexture} texture
    */
-  draw (canvas, texture) {
+  draw (frameCount, canvas, texture) {
     this.spriteStack.forEach((sprite) => {
       canvas.push()
 
@@ -56,14 +59,14 @@ export default class Entity {
         canvas.scale(sprite.scale.x, sprite.scale.y)
       }
 
-      const currentFramesetLength = sprite.frameset[sprite.currentFrameset].length
+      const currentFramesetLength = sprite.framesets[sprite.currentFrameset].length
       const frameCheck = sprite.currentFrame > currentFramesetLength - 1
 
       if (frameCheck) sprite.currentFrame = 0
 
       const frame = sprite.framesets[sprite.currentFrameset][sprite.currentFrame]
 
-      if (frameCheck % 4 === 0) {
+      if (frameCount % 4 === 0) {
         if (frameCheck) sprite.currentFrame = 0
         else sprite.currentFrame++
       }

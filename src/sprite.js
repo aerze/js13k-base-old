@@ -7,14 +7,15 @@ import Rect from './rect'
 
 export default class Sprite {
   /**
+   * @param {Frameset[]} framesets
    * @param {Point} origin
    * @param {Point} scale
-   * @param {Frameset[]} framesets
    */
-  constructor (origin, scale, framesets) {
-    this.origin = origin || new Point()
-    this.scale = scale || new Point()
-    this.framesets = framesets || [[ new Rect() ]]
+  constructor (framesets = [[]], origin = new Point(), scale = new Point(1, 1)) {
+    this.framesets = framesets
+    this.origin = origin
+    this.scale = scale
+    this.rotation = 0
 
     this.currentFrame = 0
     this.currentFrameset = 0
