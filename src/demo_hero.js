@@ -29,7 +29,9 @@ class Hero extends Katalyst.Entity {
       this.flipped = true
       this.x -= speed
     }
+
     if (k.up) this.y -= speed
+
     if (k.down) this.y += speed
   }
 }

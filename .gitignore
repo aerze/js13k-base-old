@@ -59,8 +59,8 @@ typings/
 
 # Build artifacts
 build/
-dist/
-release/
+compile/
+releases/
 
 # VSCode
 .vscode/
