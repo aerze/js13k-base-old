@@ -1,5 +1,4 @@
 import Katalyst from './katalyst'
-import keys from './controls'
 
 const idleFrames = [
   new Katalyst.Rect(156, 18, 12, 18),
@@ -18,7 +17,7 @@ class Hero extends Katalyst.Entity {
   }
 
   update (frameCount) {
-    const k = keys()
+    const k = Katalyst.Controls()
     const speed = 4
 
     if (k.right) {

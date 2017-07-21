@@ -5,8 +5,8 @@
   "description": "Boilerplate template for making very small games",
   "main": "index.js",
   "scripts": {
-    "start": "gulp watch:build & static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./build",
-    "test": "gulp watch:compile & static -z -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./compile",
+    "start": "gulp build:html && gulp watch:build & static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./build",
+    "test": "gulp compile:html && gulp watch:compile & static -z -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./compile",
     "package": "gulp compile:zip"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "gulp-zip": "^4.0.0",
     "handlebars": "^4.0.10",
     "node-static": "^0.7.9",
+    "rollup-plugin-local-resolve": "^1.0.7",
     "rollup-stream": "^1.23.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

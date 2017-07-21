@@ -7,4 +7,6 @@ export const min = Math.min
 export const max = Math.max
 
 // Utility Functions
-export const randInt = (min, max) => floor(rand() * (max - min + 1)) + min
+export default {
+  randInt: (min, max) => floor(rand() * (max - min + 1)) + min
+}

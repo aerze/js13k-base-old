@@ -1,8 +1,13 @@
 import TinyCanvas, { CreateTexture } from './tinyCanvas'
-import Game from './game'
+import Controls from './controls'
 import Entity from './entity'
-import Sprite from './sprite'
+import Game from './game'
+import Group from './group'
+import Point from './point'
 import Rect from './rect'
+import Scene from './scene'
+import Sprite from './sprite'
+import Utils from './utils'
 
 /**
  * Micro game framework
@@ -19,14 +24,19 @@ function Katalyst (canvas, spriteSource, ready) {
     tinyCanvas.bkg(0.133, 0.125, 0.204)
     const engine = new Game(tinyCanvas, texture)
     ready(engine)
-    console.log('loop:start')
     engine.loop()
   }
 }
 
-Katalyst.Game = Game
+Katalyst.TinyCanvas = TinyCanvas
+Katalyst.Controls = Controls
 Katalyst.Entity = Entity
-Katalyst.Sprite = Sprite
+Katalyst.Game = Game
+Katalyst.Group = Group
+Katalyst.Point = Point
 Katalyst.Rect = Rect
+Katalyst.Scene = Scene
+Katalyst.Sprite = Sprite
+Katalyst.Utils = Utils
 
 export default Katalyst

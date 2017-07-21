@@ -1,5 +1,6 @@
 const gulp = require('gulp')
 const rollup = require('rollup-stream')
+const localResolve = require('rollup-plugin-local-resolve')
 const sourceMaps = require('gulp-sourcemaps')
 const buffer = require('vinyl-buffer')
 const source = require('vinyl-source-stream')
@@ -10,6 +11,7 @@ const gulpWebpack = require('gulp-webpack')
 gulp.task('build:js', () =>
   rollup({
     entry: 'src/index.js',
+    plugins: [localResolve()],
     format: 'es',
     sourceMap: true
   })
@@ -23,6 +25,7 @@ gulp.task('build:js', () =>
 gulp.task('build:js:min', () =>
   rollup({
     entry: 'src/index.js',
+    plugins: [localResolve()],
     format: 'es'
   })
     .pipe(source('main.min.js'))
