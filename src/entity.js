@@ -22,6 +22,7 @@ export default class Entity {
     this.hitbox = hitbox
     this.spriteStack = spriteStack
     this.type = type
+    this.flipped = false
   }
 
   update () {
@@ -73,9 +74,9 @@ export default class Entity {
         0, 0,
         frame.width,
         frame.height,
-        sprite.flipped ? x2 : x1,
+        this.flipped ? x2 : x1,
         y1,
-        sprite.flipped ? x1 : x2,
+        this.flipped ? x1 : x2,
         y2
       )
 

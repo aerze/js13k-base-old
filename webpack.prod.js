@@ -1,22 +1,14 @@
 const path = require('path')
 const ClosureCompilerPlugin = require('webpack-closure-compiler')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-var CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
-  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.bundle.js',
-    sourceMapFilename: 'main.map'
+    path: path.resolve(__dirname, 'build'),
+    filename: 'main.min.js',
+    sourceMapFilename: 'main.min.map'
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'js13k-base',
-      template: './src/index.ejs'
-    }),
-
     new ClosureCompilerPlugin({
       compiler: {
         language_in: 'ECMASCRIPT6',
@@ -24,12 +16,6 @@ module.exports = {
         compilation_level: 'ADVANCED'
       },
       concurrency: 3
-    }),
-
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|html)$/
     })
   ]
 }

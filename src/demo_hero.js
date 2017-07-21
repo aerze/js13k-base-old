@@ -19,11 +19,19 @@ class Hero extends Katalyst.Entity {
 
   update (frameCount) {
     const k = keys()
+    const speed = 4
 
-    if (k.right) this.x += 4
-    if (k.left) this.x -= 4
-    if (k.up) this.y -= 4
-    if (k.down) this.y += 4
+    if (k.right) {
+      this.flipped = false
+      this.x += speed
+    }
+
+    if (k.left) {
+      this.flipped = true
+      this.x -= speed
+    }
+    if (k.up) this.y -= speed
+    if (k.down) this.y += speed
   }
 }
 
