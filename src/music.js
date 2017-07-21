@@ -51,7 +51,7 @@ export default function playSong () {
     'G3  e',
     'F3  q'
   ]
-  var bass    = [
+  var bass = [
     'D3  q',
     '-   h',
     'D3  q',

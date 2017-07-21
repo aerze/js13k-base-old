@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    {{#if css}}
+        <style>
+          {{{ css }}}
+        </style>
+    {{else}}
+        <link rel="stylesheet" href="main.css">
+    {{/if}}
+</head>
+<body>
+  <canvas id='c' width="512" height="512"></canvas>
+  {{#if js}}
+      <script>
+        {{{ js }}}
+      </script>
+  {{else}}
+      <script src='main.js'></script>
+  {{/if}}
+</body>
+</html>

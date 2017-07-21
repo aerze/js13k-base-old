@@ -3,17 +3,23 @@ Boilerplate template for making very small games
 
 
 ### Usage
-
 Run `npm install`
 
 - `npm start`
-  - serves `./build` and starts webpack with watcher
+  - builds files from `./src/index.js` as an entry point
+  - places files into `./build`
+  - serves `./build`
+  - watches `./src` for specific file types
 
-- `npm run package`
-  - serves `/dist` with gzip and runs webpack with closure compiler
+- `npm test` (doesn't actually run tests)
+  - builds minified files from `./src/index.js` as an entry point
+  - places files into `./build`
+  - builds a single html file and moves assets into `./compile`
+  - serves `./compile`
+  - watches `./src` for specific file types
 
-##### To Do:
-
-- `npm run release`
-  - bundle, zip/compress dist directory
-
+- `npm run zip`
+  - builds minified files from `./src/index.js` as an entry point
+  - places files into `./build`
+  - builds a single html file and moves assets into `./compile`
+  - zips `./compile` into a `./releases`
