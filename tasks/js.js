@@ -4,7 +4,7 @@ const sourceMaps = require('gulp-sourcemaps')
 const buffer = require('vinyl-buffer')
 const source = require('vinyl-source-stream')
 const webpack = require('webpack')
-const config = require('../webpack.prod.js')
+const config = require('../webpack.config.js')
 const gulpWebpack = require('gulp-webpack')
 
 gulp.task('build:js', () =>

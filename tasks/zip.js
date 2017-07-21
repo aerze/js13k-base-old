@@ -8,5 +8,5 @@ gulp.task('compile:zip', [ 'compile:html' ], () =>
   gulp.src('./compile/**/*')
     .pipe(zip(`${name}.zip`))
     .pipe(size())
-    .pipe(gulp.dest('./release'))
+    .pipe(gulp.dest('./releases'))
 )
