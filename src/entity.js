@@ -1,20 +1,19 @@
-// import TinyCanvas, { CreateTexture } from './canvas'
-import TinyCanvas, { CreateTexture } from '../libs/tiny-canvas'
+import TinyCanvas from './tinyCanvas'
 import Sprite from './sprite'
 
+/**
+ * Base renderable game object
+ */
 export default class Entity {
   /**
-   * Base renderable object
-   * @param {number} layer
+   * Base renderable game object
    * @param {number} x
    * @param {number} y
-   * @param {number[]} hitbox
-   * @param {Sprite[]} spriteStack
-   * @param {function|null} updateFunction
+   * @param {Array<number>} hitbox
+   * @param {Array<Sprite>} spriteStack
    * @param {number} type
    */
-  constructor (layer, x = 0, y = 0, hitbox, spriteStack, update = () => {}, type) {
-    this.layer = layer
+  constructor (x = 0, y = 0, hitbox, spriteStack, type) {
     this.x = x
     this.y = y
     this.r = 0
@@ -22,12 +21,7 @@ export default class Entity {
     this.yv = 0
     this.hitbox = hitbox
     this.spriteStack = spriteStack
-    this.update = update.bind(this)
     this.type = type
-  }
-
-  delete () {
-
   }
 
   update () {
@@ -37,7 +31,7 @@ export default class Entity {
   /**
    * Draw entity to a canvas
    * @param {number} frameCount
-   * @param {} canvas
+   * @param {TinyCanvas} canvas
    * @param {WebGLTexture} texture
    */
   draw (frameCount, canvas, texture) {
@@ -51,9 +45,7 @@ export default class Entity {
 
       canvas.rot(sprite.rotation)
 
-      if (sprite.color) {
-        canvas.col = sprite.color
-      }
+      canvas.col = sprite.color
 
       if (sprite.scale.x || sprite.scale.y) {
         canvas.scale(sprite.scale.x, sprite.scale.y)

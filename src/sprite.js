@@ -2,12 +2,13 @@ import Point from './point'
 import Rect from './rect'
 
 /**
- * @typedef {Rect[]} Frameset
+ * @typedef {Array<Rect>} Frameset
  */
+var Frameset = []
 
 export default class Sprite {
   /**
-   * @param {Frameset[]} framesets
+   * @param {Array<Frameset>} framesets
    * @param {Point} origin
    * @param {Point} scale
    */
@@ -16,6 +17,8 @@ export default class Sprite {
     this.origin = origin
     this.scale = scale
     this.rotation = 0
+
+    this.color = 0xFFFFFFFF
 
     this.currentFrame = 0
     this.currentFrameset = 0

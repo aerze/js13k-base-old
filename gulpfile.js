@@ -3,7 +3,8 @@ const zip = require('gulp-zip')
 
 const FILES = [
   'dist/index.html',
-  'dist/main.bundle.js.gz'
+  'dist/main.bundle.js.gz',
+  'dist/images.png'
 ]
 
 const RELEASE_DIR = 'release'

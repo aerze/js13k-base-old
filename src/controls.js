@@ -1,23 +1,43 @@
 const key = {}
 
 // Handle keys
-addEventListener('keydown', e => {
-  console.log(e.which)
-  key[e.which] = true
-})
-addEventListener('keyup', e => {
-  console.log(e.which)
-  key[e.which] = false
-})
+addEventListener('keydown', e => key[e.which] = true)
+
+addEventListener('keyup', e => key[e.which] = false)
 
 // Keyboard controls
-export const RETURN = key[13]
-export const SHIFT = key[16]
-export const ESC = key[27]
-export const W = key[87]
-export const S = key[83]
-export const A = key[65]
-export const D = key[68]
-export const SPACE = key[74]
-export const J = key[73]
-export const K = key[75]
+
+function keys () {
+  return {
+    shift: key[16],
+
+    return: key[13],
+    start: key[13],
+
+    esc: key[27],
+    cancel: key[27],
+
+    w: key[87],
+    up: key[87],
+
+    s: key[83],
+    down: key[83],
+
+    a: key[65],
+    left: key[65],
+
+    d: key[68],
+    right: key[68],
+
+    space: key[32],
+    jump: key[32],
+
+    j: key[73],
+    button1: key[73],
+
+    k: key[75],
+    button2: key[75]
+  }
+}
+
+export default keys
