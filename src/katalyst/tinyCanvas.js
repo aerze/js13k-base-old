@@ -1,68 +1,72 @@
-/**
- * Compiles shader from source
- * @param {WebGLRenderingContext} gl
- * @param {string} source
- * @param {number} type
- */
-function CompileShader (gl, source, type) {
-  var shader = gl.createShader(type)
-  gl.shaderSource(shader, source)
-  gl.compileShader(shader)
-  return shader
-}
 
 /**
- * Creates a program using 2 shaders
- * @param {WebGLRenderingContext} gl
- * @param {string} vsSource - vertex shader
- * @param {string} fsSource - fragment shader
+ * @memberof Katalyst
  */
-function CreateShaderProgram (gl, vsSource, fsSource) {
-  const program = gl.createProgram()
-  const vShader = CompileShader(gl, vsSource, 35633)
-  const fShader = CompileShader(gl, fsSource, 35632)
-  gl.attachShader(program, vShader)
-  gl.attachShader(program, fShader)
-  gl.linkProgram(program)
-  return program
-}
+class TinyCanvas {
+  /**
+   * Compiles shader from source
+   * @param {WebGLRenderingContext} gl
+   * @param {string} source
+   * @param {number} type
+   */
+  static CompileShader (gl, source, type) {
+    var shader = gl.createShader(type)
+    gl.shaderSource(shader, source)
+    gl.compileShader(shader)
+    return shader
+  }
 
-/**
- * Creates WebGLBuffer
- * @param {WebGLRenderingContext} gl
- * @param {number} bufferType
- * @param {number} size
- * @param {number} usage
- */
-function CreateBuffer (gl, bufferType, size, usage) {
-  var buffer = gl.createBuffer()
-  gl.bindBuffer(bufferType, buffer)
-  gl.bufferData(bufferType, size, usage)
-  return buffer
-}
+  /**
+   * Creates a program using 2 shaders
+   * @param {WebGLRenderingContext} gl
+   * @param {string} vsSource - vertex shader
+   * @param {string} fsSource - fragment shader
+   */
+  static CreateShaderProgram (gl, vsSource, fsSource) {
+    const program = gl.createProgram()
+    const vShader = TinyCanvas.CompileShader(gl, vsSource, 35633)
+    const fShader = TinyCanvas.CompileShader(gl, fsSource, 35632)
+    gl.attachShader(program, vShader)
+    gl.attachShader(program, fShader)
+    gl.linkProgram(program)
+    return program
+  }
 
-/**
- * Creates a texture render-able by TinyCanvas.img()
- * @param {WebGLRenderingContext} gl
- * @param {ImageBitmap | ImageData | HTMLVideoElement | HTMLImageElement | HTMLCanvasElement} image
- * @param {number} width
- * @param {number} height
- */
-export function CreateTexture (gl, image, width, height) {
-  var texture = gl.createTexture()
-  gl.bindTexture(3553, texture)
-  gl.texParameteri(3553, 10242, 33071)
-  gl.texParameteri(3553, 10243, 33071)
-  gl.texParameteri(3553, 10240, 9728)
-  gl.texParameteri(3553, 10241, 9728)
-  gl.texImage2D(3553, 0, 6408, 6408, 5121, image)
-  gl.bindTexture(3553, null)
-  texture.width = width
-  texture.height = height
-  return texture
-}
+  /**
+   * Creates WebGLBuffer
+   * @param {WebGLRenderingContext} gl
+   * @param {number} bufferType
+   * @param {number} size
+   * @param {number} usage
+   */
+  static CreateBuffer (gl, bufferType, size, usage) {
+    var buffer = gl.createBuffer()
+    gl.bindBuffer(bufferType, buffer)
+    gl.bufferData(bufferType, size, usage)
+    return buffer
+  }
 
-export default class TinyCanvas {
+  /**
+   * Creates a texture render-able by TinyCanvas.img()
+   * @param {WebGLRenderingContext} gl
+   * @param {ImageBitmap | ImageData | HTMLVideoElement | HTMLImageElement | HTMLCanvasElement} image
+   * @param {number} width
+   * @param {number} height
+   */
+  static CreateTexture (gl, image, width, height) {
+    var texture = gl.createTexture()
+    gl.bindTexture(3553, texture)
+    gl.texParameteri(3553, 10242, 33071)
+    gl.texParameteri(3553, 10243, 33071)
+    gl.texParameteri(3553, 10240, 9728)
+    gl.texParameteri(3553, 10241, 9728)
+    gl.texImage2D(3553, 0, 6408, 6408, 5121, image)
+    gl.bindTexture(3553, null)
+    texture.width = width
+    texture.height = height
+    return texture
+  }
+
   /**
    * @param {HTMLCanvasElement} canvas
    */
@@ -79,7 +83,7 @@ export default class TinyCanvas {
     const INDEX_DATA_SIZE = MAX_BATCH * (2 * VERTICES_PER_QUAD)
     const width = canvas.width
     const height = canvas.height
-    const shader = CreateShaderProgram(gl, `
+    const shader = TinyCanvas.CreateShaderProgram(gl, `
       precision lowp float;
       attribute vec2 a, b;
       attribute vec4 c;
@@ -109,8 +113,8 @@ export default class TinyCanvas {
     const vPositionData = new Float32Array(vertexData)
     const vColorData = new Uint32Array(vertexData)
     let vIndexData = new Uint16Array(INDEX_DATA_SIZE)
-    const IBO = CreateBuffer(gl, 34963, vIndexData.byteLength, 35044)
-    const VBO = CreateBuffer(gl, 34962, vertexData.byteLength, 35048)
+    const IBO = TinyCanvas.CreateBuffer(gl, 34963, vIndexData.byteLength, 35044)
+    const VBO = TinyCanvas.CreateBuffer(gl, 34962, vertexData.byteLength, 35048)
     let count = 0
     const mat = new Float32Array([1, 0, 0, 1, 0, 0])
     const stack = new Float32Array(100)
@@ -335,3 +339,5 @@ export default class TinyCanvas {
     }
   }
 }
+
+export default TinyCanvas

@@ -6,8 +6,12 @@ import Rect from './rect'
  */
 var Frameset = []
 
-export default class Sprite {
+/**
+ * @memberof Katalyst
+ */
+class Sprite {
   /**
+   * Renderable object behind entities
    * @param {Array<Frameset>} framesets
    * @param {Point} origin
    * @param {Point} scale
@@ -16,11 +20,12 @@ export default class Sprite {
     this.framesets = framesets
     this.origin = origin
     this.scale = scale
+
     this.rotation = 0
-
     this.color = 0xFFFFFFFF
-
     this.currentFrame = 0
     this.currentFrameset = 0
   }
 }
+
+export default Sprite

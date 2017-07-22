@@ -1,12 +1,22 @@
-// Function shortcuts
-export const addEventListener = document.addEventListener
-export const rand = Math.random
-export const floor = Math.floor
-export const ceil = Math.ceil
-export const min = Math.min
-export const max = Math.max
+/**
+ * @memberof Katalyst
+ */
+const Utils = {
+  addEventListener: document.addEventListener,
+  rand: Math.random,
+  floor: Math.floor,
+  ceil: Math.ceil,
+  min: Math.min,
+  max: Math.max,
 
-// Utility Functions
-export default {
-  randInt: (min, max) => floor(rand() * (max - min + 1)) + min
+  /**
+   * Returns a random integer
+   * @param {number} min
+   * @param {number} max
+   */
+  randInt (min, max) {
+    return Utils.floor(Utils.rand() * (max - min + 1)) + min
+  }
 }
+
+export default Utils

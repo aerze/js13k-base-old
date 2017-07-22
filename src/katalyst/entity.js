@@ -3,8 +3,9 @@ import Sprite from './sprite'
 
 /**
  * Base renderable game object
+ * @memberof Katalyst
  */
-export default class Entity {
+class Entity {
   /**
    * Base renderable game object
    * @param {number} x
@@ -25,6 +26,9 @@ export default class Entity {
     this.flipped = false
   }
 
+  /**
+   * Run entity update logic
+   */
   update () {
 
   }
@@ -85,3 +89,5 @@ export default class Entity {
     })
   }
 }
+
+export default Entity

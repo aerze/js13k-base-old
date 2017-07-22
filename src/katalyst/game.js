@@ -1,8 +1,12 @@
 import TinyCanvas from './tinyCanvas'
 import Scene from './scene'
 
-export default class Game {
+/**
+ * @memberof Katalyst
+ */
+class Game {
   /**
+   * Core game controller
    * @param {TinyCanvas} canvas
    * @param {WebGLTexture} texture
    */
@@ -28,6 +32,9 @@ export default class Game {
     return this.scenes[name] = scene
   }
 
+  /**
+   * Main game loop
+   */
   loop () {
     // console.log('loop')
     requestAnimationFrame(this.loop)
@@ -38,6 +45,9 @@ export default class Game {
     this.frameCount++
   }
 
+  /**
+   * Calls update on the active scene
+   */
   update () {
     // check game for start new game trigger
     // check for pause trigger
@@ -46,8 +56,13 @@ export default class Game {
     this.activeScene.update(this.frameCount)
   }
 
+  /**
+   * Calls draw on the active scene
+   */
   draw () {
     this.activeScene &&
     this.activeScene.draw(this.frameCount, this.canvas, this.texture)
   }
 }
+
+export default Game

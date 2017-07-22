@@ -1,4 +1,4 @@
-import TinyCanvas, { CreateTexture } from './tinyCanvas'
+import TinyCanvas from './tinyCanvas'
 import Controls from './controls'
 import Entity from './entity'
 import Game from './game'
@@ -11,6 +11,7 @@ import Utils from './utils'
 
 /**
  * Micro game framework
+ * @namespace
  * @param {HTMLCanvasElement} canvas
  * @param {string} spriteSource
  * @param {function(Game)} ready
@@ -20,7 +21,7 @@ function Katalyst (canvas, spriteSource, ready) {
   const spritesheet = new Image()
   spritesheet.src = spriteSource
   spritesheet.onload = () => {
-    const texture = CreateTexture(tinyCanvas.g, spritesheet, spritesheet.width, spritesheet.height)
+    const texture = TinyCanvas.CreateTexture(tinyCanvas.g, spritesheet, spritesheet.width, spritesheet.height)
     tinyCanvas.bkg(0.133, 0.125, 0.204)
     const engine = new Game(tinyCanvas, texture)
     ready(engine)

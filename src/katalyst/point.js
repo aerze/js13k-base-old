@@ -1,4 +1,7 @@
-export default class Point {
+/**
+ * @memberof Katalyst
+ */
+class Point {
   /**
    * Creates a point object
    * @param {number} x
@@ -9,3 +12,5 @@ export default class Point {
     this.y = y
   }
 }
+
+export default Point

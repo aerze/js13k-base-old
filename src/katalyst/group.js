@@ -1,6 +1,13 @@
 import Entity from './entity'
 
-export default class Group {
+/**
+ * @memberof Katalyst
+ */
+class Group {
+  /**
+   * A collection of Entities
+   * @param {string} name
+   */
   constructor (name) {
     this.name = `group:${name}`
     this.counter = 0
@@ -39,3 +46,5 @@ export default class Group {
     }
   }
 }
+
+export default Group

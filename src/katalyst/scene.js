@@ -1,6 +1,12 @@
 import Group from './group'
 
-export default class Scene {
+/**
+ * @memberof Katalyst
+ */
+class Scene {
+  /**
+   * Collection of groups
+   */
   constructor () {
     this.groups = {}
   }
@@ -34,3 +40,5 @@ export default class Scene {
     }
   }
 }
+
+export default Scene

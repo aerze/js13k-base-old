@@ -7,6 +7,7 @@
   "scripts": {
     "start": "gulp build:html && gulp watch:build & static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./build",
     "test": "gulp compile:html && gulp watch:compile & static -z -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./compile",
+    "docs": "jsdoc -r -d ./docs ./src/katalyst/ && static -H '{\"Cache-Control\": \"no-cache, must-revalidate\"}' ./docs",
     "package": "gulp compile:zip"
   },
   "repository": {
