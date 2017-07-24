@@ -1,3 +1,4 @@
+import TinyCanvas from './tinyCanvas'
 import Group from './group'
 
 /**
@@ -21,17 +22,19 @@ class Scene {
 
   /**
    * Calls update() on all groups in the scene
+   * @param {number} frameCount
+   * @param {TinyCanvas} canvas
    */
-  update (frameCount) {
+  update (frameCount, canvas) {
     for (const name in this.groups) {
-      this.groups[name].update(frameCount)
+      this.groups[name].update(frameCount, canvas)
     }
   }
 
   /**
    * Calls draw() on all groups in the scene
    * @param {number} frameCount
-   * @param {object} canvas
+   * @param {TinyCanvas} canvas
    * @param {WebGLTexture} texture
    */
   draw (frameCount, canvas, texture) {

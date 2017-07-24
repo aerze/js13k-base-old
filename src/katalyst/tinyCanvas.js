@@ -161,6 +161,8 @@ class TinyCanvas {
     )
     gl.activeTexture(33984)
 
+    this.width = width
+    this.height = height
     this.g = gl
     this.c = canvas
     this.col = 0xFFFFFFFF

@@ -1,3 +1,4 @@
+import TinyCanvas from './tinyCanvas'
 import Entity from './entity'
 
 /**
@@ -27,17 +28,19 @@ class Group {
 
   /**
    * Calls update() on every entity in the group
+   * @param {number} frameCount
+   * @param {TinyCanvas} canvas
    */
-  update (frameCount) {
+  update (frameCount, canvas) {
     for (const id in this.list) {
-      this.list[id].update(frameCount)
+      this.list[id].update(frameCount, canvas)
     }
   }
 
   /**
    * Calls draw() on every entity in the group
    * @param {number} frameCount
-   * @param {object} canvas
+   * @param {TinyCanvas} canvas
    * @param {WebGLTexture} texture
    */
   draw (frameCount, canvas, texture) {

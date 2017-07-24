@@ -28,8 +28,10 @@ class Entity {
 
   /**
    * Run entity update logic
+   * @param {number} frameCount
+   * @param {TinyCanvas} canvas
    */
-  update () {
+  update (frameCount, canvas) {
 
   }
 

@@ -53,7 +53,7 @@ class Game {
     // check for pause trigger
     // update all entities
     this.activeScene &&
-    this.activeScene.update(this.frameCount)
+    this.activeScene.update(this.frameCount, this.canvas)
   }
 
   /**
