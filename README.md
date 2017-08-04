@@ -18,7 +18,7 @@ Run `npm install`
   - serves `./compile`
   - watches `./src` for specific file types
 
-- `npm run zip`
+- `npm run package`
   - builds minified files from `./src/index.js` as an entry point
   - places files into `./build`
   - builds a single html file and moves assets into `./compile`
