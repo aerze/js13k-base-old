@@ -1,6 +1,6 @@
 # js13k-base
 Boilerplate template for making very small games
-
+*REQUIRED* Java SDK must be installed for the Google Clousure Compiler
 
 ### Usage
 Run `npm install`
