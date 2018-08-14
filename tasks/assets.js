@@ -12,5 +12,5 @@ gulp.task('build:assets', () =>
 gulp.task('compile:assets', () =>
   gulp.src(image)
     .pipe(rename('images.png'))
-    .pipe(gulp.dest('./compile'))
+    // .pipe(gulp.dest('./compile'))
 )
