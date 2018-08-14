@@ -20,7 +20,7 @@ function readFile (fileName) {
   })
 }
 
-gulp.task('build:html', [ 'build:js', 'build:css', 'build:assets' ], done => {
+gulp.task('build:html', ['build:js', 'build:css'], done => {
   readFile('./src/index.hbs')
     .then(str => {
       let result = handlebars.compile(str)()
@@ -29,16 +29,19 @@ gulp.task('build:html', [ 'build:js', 'build:css', 'build:assets' ], done => {
     .then(done)
 })
 
-gulp.task('compile:html', [ 'compile:js', 'compile:css', 'compile:assets' ], done => {
+gulp.task('compile:html', ['compile:js', 'compile:css'], done => {
   let files = {}
 
   readFile('./build/main.min.js')
-    .then(js => files.js = js)
+    .then(js => (files.js = js))
     .then(() => readFile('./build/main.min.css'))
-    .then(css => files.css = css)
+    .then(css => (files.css = css))
     .then(() => readFile('./src/index.hbs'))
     .then(str => {
-      let inlineResult = handlebars.compile(str)({ js: files.js, css: files.css })
+      let inlineResult = handlebars.compile(str)({
+        js: files.js,
+        css: files.css
+      })
       return writeFile('./compile/index.html', inlineResult)
     })
     .then(done)

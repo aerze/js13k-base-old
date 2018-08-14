@@ -112,8 +112,8 @@ class Core {
       gl.DYNAMIC_DRAW
     )
 
-    this.vao = gl.createVertexArray()
-    gl.bindVertexArray(this.vao)
+    this.vao = gl['createVertexArray']()
+    gl['bindVertexArray'](this.vao)
     gl.enableVertexAttribArray(this.posLoc)
 
     gl.vertexAttribPointer(this.posLoc, 2, gl.FLOAT, false, 0, 0)
@@ -137,7 +137,7 @@ class Core {
     gl.clear(gl.COLOR_BUFFER_BIT)
 
     gl.useProgram(program)
-    gl.bindVertexArray(this.vao)
+    gl['bindVertexArray'](this.vao)
     gl.uniform2f(this.resLoc, gl.canvas.width, gl.canvas.height)
 
     this.update(delta)
