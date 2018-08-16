@@ -3,17 +3,12 @@ const x = 0
 const y = 1
 const vert = `#version 300 es
 in vec2 a_pos;
+
 uniform vec2 u_res;
-uniform vec2 u_trans;
-uniform vec2 u_rot;
-uniform vec2 u_scale;
+uniform mat3 u_mat;
+
 void main() {
-  vec2 s_pos = a_pos * u_scale;
-  vec2 r_pos = vec2(
-    s_pos.x * u_rot.y + s_pos.y * u_rot.x,
-    s_pos.y * u_rot.y - s_pos.x * u_rot.x
-  );
-  vec2 pos = r_pos + u_trans;
+  vec2 pos = (u_mat * vec3(a_pos, 1)).xy;
   vec2 zOne = pos / u_res;
   vec2 zTwo = zOne * 2.0;
   vec2 clip = zTwo - 1.0;
@@ -115,9 +110,10 @@ class Core {
     this.posLoc = gl.getAttribLocation(program, 'a_pos')
     this.resLoc = gl.getUniformLocation(program, 'u_res')
     this.colLoc = gl.getUniformLocation(program, 'u_col')
-    this.transLoc = gl.getUniformLocation(program, 'u_trans')
-    this.rotLoc = gl.getUniformLocation(program, 'u_rot')
-    this.scaleLoc = gl.getUniformLocation(program, 'u_scale')
+    this.matLoc = gl.getUniformLocation(program, 'u_mat')
+    // this.transLoc = gl.getUniformLocation(program, 'u_trans')
+    // this.rotLoc = gl.getUniformLocation(program, 'u_rot')
+    // this.scaleLoc = gl.getUniformLocation(program, 'u_scale')
 
     this.positions = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positions)
@@ -148,6 +144,7 @@ class Core {
   render (now) {
     const { gl, program } = this
     const delta = (now || 0) - this.then
+    console.log(`delta`, delta)
     this.then = now
 
     Core.resize(gl.canvas)
@@ -184,10 +181,15 @@ class Core {
     if (Input.isDown.down) this.trans[y] += 5
     if (Input.isDown.left) this.trans[x] -= 5
     if (Input.isDown.right) this.trans[x] += 5
+    if (Input.isDown.stop) this.go = false
 
-    this.gl.uniform2fv(this.scaleLoc, this.scale)
-    this.gl.uniform2fv(this.rotLoc, [Math.sin(this.angle), Math.cos(this.angle)])
-    this.gl.uniform2fv(this.transLoc, this.trans)
+    const translationMat = this.translate(this.trans[x], this.trans[y])
+    const rotationMat = this.rotation(this.angle)
+    const scaleMat = this.scaling(this.scale[x], this.scale[y])
+
+    const matrix = this.multiply(this.multiply(translationMat, rotationMat), scaleMat)
+
+    this.gl.uniformMatrix3fv(this.matLoc, false, matrix)
     this.setGeometry(this.gl)
   }
 
@@ -315,7 +317,3 @@ body.appendChild(canvas)
 
 const K = new Core(canvas)
 K.init()
-
-body.addEventListener('click', () => {
-  K.go = false
-})

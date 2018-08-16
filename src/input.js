@@ -15,6 +15,7 @@ const Input = {
   },
 
   map: {
+    '8': 'stop',
     '37': 'left',
     '38': 'up',
     '39': 'right',
