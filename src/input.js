@@ -1,47 +1,42 @@
-const Input = {
-  /**
-   * @param {KeyboardEvent} e
-   */
-  handleKey (e) {
-    const key = this.map[e.keyCode]
-    const isDown = e.type === 'keydown'
-    this.isDown[key] = isDown
-    if (!key) console.log(e.key, e.keyCode)
-  },
+export const UNDEFINED = 0
+export const UP = 1
+export const DOWN = 2
+export const LEFT = 3
+export const RIGHT = 4
+export const ROT_RIGHT = 5
+export const ROT_LEFT = 6
+export const ZOOM_IN = 7
+export const ZOOM_OUT = 8
+export const STOP = 9
 
-  init () {
-    window.addEventListener('keydown', this.handleKey.bind(this))
-    window.addEventListener('keyup', this.handleKey.bind(this))
-  },
-
-  map: {
-    '8': 'stop',
-    '37': 'left',
-    '38': 'up',
-    '39': 'right',
-    '40': 'down',
-    '65': 'left',
-    '87': 'up',
-    '68': 'right',
-    '83': 'down',
-    '69': 'rotRight',
-    '81': 'rotLeft',
-    '82': 'zoomIn',
-    '70': 'zoomOut',
-    'undefined': 'undefined'
-  },
-
-  isDown: {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    rotRight: false,
-    rotLeft: false,
-    zoomIn: false,
-    zoomOut: false,
-    undefined: false
-  }
+export const isDown = Array(10).fill(false)
+export const init = () => {
+  window.addEventListener('keydown', handleKey)
+  window.addEventListener('keyup', handleKey)
 }
 
-export default Input
+const map = {
+  8: STOP,
+  37: LEFT,
+  38: UP,
+  39: RIGHT,
+  40: DOWN,
+  65: LEFT,
+  87: UP,
+  68: RIGHT,
+  83: DOWN,
+  69: ROT_RIGHT,
+  81: ROT_LEFT,
+  82: ZOOM_IN,
+  70: ZOOM_OUT,
+  'undefined': UNDEFINED
+}
+
+/**
+ * @param {KeyboardEvent} e
+ */
+function handleKey (e) {
+  console.log(e.key, e.keyCode)
+  const key = map[e.keyCode] || UNDEFINED
+  isDown[key] = e.type === 'keydown'
+}

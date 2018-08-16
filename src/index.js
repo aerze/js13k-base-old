@@ -1,4 +1,4 @@
-import Input from './input'
+import * as Input from './input'
 const x = 0
 const y = 1
 const vert = `#version 300 es
@@ -173,15 +173,16 @@ class Core {
    * @param {number} delta ms
    */
   update (delta) {
-    if (Input.isDown.zoomIn) this.scale = this.scale.map(c => c + 0.2)
-    if (Input.isDown.zoomOut) this.scale = this.scale.map(c => c - 0.2)
-    if (Input.isDown.rotRight) this.angle -= Math.PI * 0.02
-    if (Input.isDown.rotLeft) this.angle += Math.PI * 0.02
-    if (Input.isDown.up) this.trans[y] -= 5
-    if (Input.isDown.down) this.trans[y] += 5
-    if (Input.isDown.left) this.trans[x] -= 5
-    if (Input.isDown.right) this.trans[x] += 5
-    if (Input.isDown.stop) this.go = false
+    console.log(Input.isDown[Input.DOWN])
+    if (Input.isDown[Input.ZOOM_IN]) this.scale = this.scale.map(c => c + 0.2)
+    if (Input.isDown[Input.ZOOM_OUT]) this.scale = this.scale.map(c => c - 0.2)
+    if (Input.isDown[Input.ROT_RIGHT]) this.angle -= Math.PI * 0.02
+    if (Input.isDown[Input.ROT_LEFT]) this.angle += Math.PI * 0.02
+    if (Input.isDown[Input.UP]) this.trans[y] -= 5
+    if (Input.isDown[Input.DOWN]) this.trans[y] += 5
+    if (Input.isDown[Input.LEFT]) this.trans[x] -= 5
+    if (Input.isDown[Input.RIGHT]) this.trans[x] += 5
+    if (Input.isDown[Input.STOP]) this.go = false
 
     const translationMat = this.translate(this.trans[x], this.trans[y])
     const rotationMat = this.rotation(this.angle)
