@@ -1,8 +1,20 @@
+import Input from './input'
+const x = 0
+const y = 1
 const vert = `#version 300 es
 in vec2 a_pos;
 uniform vec2 u_res;
+uniform vec2 u_trans;
+uniform vec2 u_rot;
+uniform vec2 u_scale;
 void main() {
-  vec2 zOne = a_pos / u_res;
+  vec2 s_pos = a_pos * u_scale;
+  vec2 r_pos = vec2(
+    s_pos.x * u_rot.y + s_pos.y * u_rot.x,
+    s_pos.y * u_rot.y - s_pos.x * u_rot.x
+  );
+  vec2 pos = r_pos + u_trans;
+  vec2 zOne = pos / u_res;
   vec2 zTwo = zOne * 2.0;
   vec2 clip = zTwo - 1.0;
   gl_Position = vec4(clip * vec2(1, -1), 0, 1);
@@ -103,6 +115,9 @@ class Core {
     this.posLoc = gl.getAttribLocation(program, 'a_pos')
     this.resLoc = gl.getUniformLocation(program, 'u_res')
     this.colLoc = gl.getUniformLocation(program, 'u_col')
+    this.transLoc = gl.getUniformLocation(program, 'u_trans')
+    this.rotLoc = gl.getUniformLocation(program, 'u_rot')
+    this.scaleLoc = gl.getUniformLocation(program, 'u_scale')
 
     this.positions = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positions)
@@ -117,6 +132,12 @@ class Core {
     gl.enableVertexAttribArray(this.posLoc)
 
     gl.vertexAttribPointer(this.posLoc, 2, gl.FLOAT, false, 0, 0)
+
+    Input.init()
+
+    this.scale = [1, 1]
+    this.angle = 0
+    this.trans = [0, 0]
 
     this.render()
   }
@@ -142,7 +163,7 @@ class Core {
 
     this.update(delta)
 
-    gl.drawArrays(gl.TRIANGLES, 0, 6)
+    gl.drawArrays(gl.TRIANGLES, 0, 18)
 
     if (this.go) {
       requestAnimationFrame(this.render)
@@ -155,6 +176,62 @@ class Core {
    * @param {number} delta ms
    */
   update (delta) {
+    if (Input.isDown.zoomIn) this.scale = this.scale.map(c => c + 0.2)
+    if (Input.isDown.zoomOut) this.scale = this.scale.map(c => c - 0.2)
+    if (Input.isDown.rotRight) this.angle -= Math.PI * 0.02
+    if (Input.isDown.rotLeft) this.angle += Math.PI * 0.02
+    if (Input.isDown.up) this.trans[y] -= 5
+    if (Input.isDown.down) this.trans[y] += 5
+    if (Input.isDown.left) this.trans[x] -= 5
+    if (Input.isDown.right) this.trans[x] += 5
+
+    this.gl.uniform2fv(this.scaleLoc, this.scale)
+    this.gl.uniform2fv(this.rotLoc, [Math.sin(this.angle), Math.cos(this.angle)])
+    this.gl.uniform2fv(this.transLoc, this.trans)
+    this.setGeometry(this.gl)
+  }
+
+  translate (tx, ty) {
+    return [
+      1, 0, 0,
+      0, 1, 0,
+      tx, ty, 1
+    ]
+  }
+
+  rotation (radians) {
+    const c = Math.cos(radians)
+    const s = Math.sin(radians)
+    return [
+      c, -s, 0,
+      s, c, 0,
+      0, 0, 1
+    ]
+  }
+
+  scaling (sx, sy) {
+    return [
+      sx, 0, 0,
+      0, sy, 0,
+      0, 0, 1
+    ]
+  }
+
+  multiply (a, b) {
+    return [
+      b[0] * a[0] + b[1] * a[3] + b[2] * a[6],
+      b[0] * a[1] + b[1] * a[4] + b[2] * a[7],
+      b[0] * a[2] + b[1] * a[5] + b[2] * a[8],
+      b[3] * a[0] + b[4] * a[3] + b[5] * a[6],
+      b[3] * a[1] + b[4] * a[4] + b[5] * a[7],
+      b[3] * a[2] + b[4] * a[5] + b[5] * a[8],
+      b[6] * a[0] + b[7] * a[3] + b[8] * a[6],
+      b[6] * a[1] + b[7] * a[4] + b[8] * a[7],
+      b[6] * a[2] + b[7] * a[5] + b[8] * a[8],
+    ]
+  }
+
+  setRect () {
     const r = Math.random()
     const g = Math.random()
     const b = Math.random()
@@ -190,6 +267,43 @@ class Core {
       gl.DYNAMIC_DRAW
     )
     gl.uniform4f(this.colLoc, color[0], color[1], color[2], 1)
+  }
+
+  setGeometry (gl) {
+    const width = 100
+    const height = 150
+    const thickness = 30
+    const x = 0
+    const y = 0
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([
+        // left column
+        x, y,
+        x + thickness, y,
+        x, y + height,
+        x, y + height,
+        x + thickness, y,
+        x + thickness, y + height,
+
+        // top rung
+        x + thickness, y,
+        x + width, y,
+        x + thickness, y + thickness,
+        x + thickness, y + thickness,
+        x + width, y,
+        x + width, y + thickness,
+
+        // middle rung
+        x + thickness, y + thickness * 2,
+        x + width * 2 / 3, y + thickness * 2,
+        x + thickness, y + thickness * 3,
+        x + thickness, y + thickness * 3,
+        x + width * 2 / 3, y + thickness * 2,
+        x + width * 2 / 3, y + thickness * 3]),
+      gl.STATIC_DRAW)
+
+    gl.uniform4f(this.colLoc, 1, 0, 1, 1)
   }
 }
 
