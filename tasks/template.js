@@ -20,7 +20,7 @@ function readFile (fileName) {
   })
 }
 
-gulp.task('build:html', ['build:js', 'build:css'], done => {
+gulp.task('build:html', ['build:js', 'build:css', 'build:assets'], done => {
   readFile('./src/index.hbs')
     .then(str => {
       let result = handlebars.compile(str)()
@@ -29,7 +29,7 @@ gulp.task('build:html', ['build:js', 'build:css'], done => {
     .then(done)
 })
 
-gulp.task('compile:html', ['compile:js', 'compile:css'], done => {
+gulp.task('compile:html', ['compile:js', 'compile:css', 'compile:assets'], done => {
   let files = {}
 
   readFile('./build/main.min.js')

@@ -1,18 +1,13 @@
 import * as Input from './input'
+import * as Matrix from './matrix'
+
 const x = 0
 const y = 1
 const vert = `#version 300 es
 in vec2 a_pos;
-
-uniform vec2 u_res;
 uniform mat3 u_mat;
-
 void main() {
-  vec2 pos = (u_mat * vec3(a_pos, 1)).xy;
-  vec2 zOne = pos / u_res;
-  vec2 zTwo = zOne * 2.0;
-  vec2 clip = zTwo - 1.0;
-  gl_Position = vec4(clip * vec2(1, -1), 0, 1);
+  gl_Position = vec4((u_mat * vec3(a_pos, 1)).xy, 0, 1);
 }`
 const frag = `#version 300 es
 precision mediump float;
@@ -108,7 +103,7 @@ class Core {
     const { gl, program } = this
 
     this.posLoc = gl.getAttribLocation(program, 'a_pos')
-    this.resLoc = gl.getUniformLocation(program, 'u_res')
+    // this.resLoc = gl.getUniformLocation(program, 'u_res')
     this.colLoc = gl.getUniformLocation(program, 'u_col')
     this.matLoc = gl.getUniformLocation(program, 'u_mat')
     // this.transLoc = gl.getUniformLocation(program, 'u_trans')
@@ -156,7 +151,7 @@ class Core {
 
     gl.useProgram(program)
     gl['bindVertexArray'](this.vao)
-    gl.uniform2f(this.resLoc, gl.canvas.width, gl.canvas.height)
+    // gl.uniform2f(this.resLoc, gl.canvas.width, gl.canvas.height)
 
     this.update(delta)
 
@@ -173,6 +168,7 @@ class Core {
    * @param {number} delta ms
    */
   update (delta) {
+    const { multiply } = Matrix
     console.log(Input.isDown[Input.DOWN])
     if (Input.isDown[Input.ZOOM_IN]) this.scale = this.scale.map(c => c + 0.2)
     if (Input.isDown[Input.ZOOM_OUT]) this.scale = this.scale.map(c => c - 0.2)
@@ -184,11 +180,12 @@ class Core {
     if (Input.isDown[Input.RIGHT]) this.trans[x] += 5
     if (Input.isDown[Input.STOP]) this.go = false
 
-    const translationMat = this.translate(this.trans[x], this.trans[y])
-    const rotationMat = this.rotation(this.angle)
-    const scaleMat = this.scaling(this.scale[x], this.scale[y])
+    const projectionMat = Matrix.projection(this.gl.canvas.width, this.gl.canvas.height)
+    const translationMat = Matrix.translate(...this.trans)
+    const rotationMat = Matrix.rotation(this.angle)
+    const scaleMat = Matrix.scaling(...this.scale)
 
-    const matrix = this.multiply(this.multiply(translationMat, rotationMat), scaleMat)
+    const matrix = multiply(multiply(multiply(projectionMat, translationMat), rotationMat), scaleMat)
 
     this.gl.uniformMatrix3fv(this.matLoc, false, matrix)
     this.setGeometry(this.gl)
