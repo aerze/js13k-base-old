@@ -264,14 +264,19 @@ class TinyCanvas {
      * @param {number} v1
      */
     this.img = function (texture, x, y, w, h, u0, v0, u1, v1) {
+      // top left
       const x0 = x
       const y0 = y
+      // bottom right
       const x1 = x + w
       const y1 = y + h
+      // bottom left
       const x2 = x
       const y2 = y + h
+      // top right
       const x3 = x + w
       const y3 = y
+
       const a = mat[0]
       const b = mat[1]
       const c = mat[2]

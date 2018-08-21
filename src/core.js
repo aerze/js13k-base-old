@@ -1,19 +1,44 @@
 import { createShaderProgram } from './utils'
 
+class Point {
+  constructor (x = 1, y = 1) {
+    this.x = x
+    this.y = y
+  }
+}
+
+export class Entity {
+  constructor (x, y, w, h) {
+    this.pos = new Point(x, y)
+    this.dim = new Point(w, h)
+    this.scale = new Point(1, 1)
+    this.origin = new Point(0, 0)
+    this.radians = 0
+  }
+
+  draw (core) {
+    core.add()
+    core.translate(this.pos)
+    core.rotate(this.angle)
+    core.scale(this.scale)
+    core.draw()
+  }
+}
+
 const vert = `#version 300 es
-in vec2 a_pos;
-uniform mat3 u_mat;
-void main() {
-  gl_Position = vec4((u_mat * vec3(a_pos, 1)).xy, 0, 1);
-}`
+  in vec2 a_pos;
+  uniform mat3 u_mat;
+  void main() {
+    gl_Position = vec4((u_mat * vec3(a_pos, 1)).xy, 0, 1);
+  }`
 
 const frag = `#version 300 es
-precision mediump float;
-uniform vec4 u_col;
-out vec4 outColor;
-void main() {
-  outColor = u_col;
-}`
+  precision mediump float;
+  uniform vec4 u_col;
+  out vec4 outColor;
+  void main() {
+    outColor = u_col;
+  }`
 
 export default class Core {
   /**
@@ -22,7 +47,7 @@ export default class Core {
   constructor (canvas, systems = []) {
     const gl = this.gl = canvas.getContext('webgl2')
     const program = this.program = createShaderProgram(gl, vert, frag)
-
+    this.systems = systems
     this.posLoc = gl.getAttribLocation(program, 'a_pos')
     this.colLoc = gl.getUniformLocation(program, 'u_col')
     this.matLoc = gl.getUniformLocation(program, 'u_mat')
@@ -42,8 +67,8 @@ export default class Core {
 
     systems.forEach(system => system.init && system.init())
 
-    this.scale = [1, 1]
     this.angle = 0
+    this.scale = [1, 1]
     this.trans = [0, 0]
 
     this.lastLoop = 0
@@ -77,11 +102,11 @@ export default class Core {
   }
 
   update () {
-    this.entities.forEach(entity => entity.update())
+    this.systems.forEach(system => system.update && system.update())
   }
 
   render () {
-    this.entities.forEach(e => e.render())
+    this.systems.forEach(system => system.render && system.render())
   }
 
   /**
